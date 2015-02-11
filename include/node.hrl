@@ -1,0 +1,1 @@
+-record(node, {node_id, hostname, ip, service_type, status}).

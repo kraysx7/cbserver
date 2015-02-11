@@ -1,0 +1,14 @@
+#!/usr/bin/env escript
+%%! -name cmmpanel@192.168.0.66 -setcookie FOOBAR
+
+
+main(String) ->
+    io:format("Param >~p<~n", [String]),
+	Node = 'cbnode@192.168.8.209',
+	Mod = 'hosting_handler',
+	Fun = 'add_user',
+	Args = ["qweqwe", "afsasf"],
+	R = rpc:call(Node, Mod, Fun, Args),
+	io:format("------ ~p -------~n",[R]).
+
+
