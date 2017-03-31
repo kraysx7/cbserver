@@ -1,0 +1,1 @@
+-record(log, {log_id, action_type, action_name, user_id, create_time, log_template_params, ip}).

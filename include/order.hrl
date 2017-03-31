@@ -1,1 +1,1 @@
--record(order, {order_id, user_id, service_id, params, period, status, processing_mode, service_type}).
+-record(order, {order_id, user_id, service_id, params, period, status, processing_mode, service_type, service_name}).

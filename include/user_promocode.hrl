@@ -1,0 +1,1 @@
+-record(user_promocode, {user_promocode_id, promocode_id, user_id, params, activate_date, activate_ip, activate_ip_alpha, status}).

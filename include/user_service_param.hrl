@@ -1,0 +1,1 @@
+-record(user_service_param, {user_service_id, param_key, param_value}).

@@ -1,0 +1,1 @@
+-record(promocode, {promocode_id, type, key, params, end_date, activate_cur, activate_max, status}).
