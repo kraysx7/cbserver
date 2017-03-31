@@ -15,6 +15,7 @@
 			{database_port,  3306},
 			{database_login, "root"},
 			{database_pass,  "123"},
-			{database_name,  "cloudbilling"}
+			%% {database_name,  "progameru"}
+			{database_name,  "steamauction"}
 		]}
  ]}.

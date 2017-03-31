@@ -75,7 +75,7 @@ code_change(_OldVsn, State, _Extra) ->
 %% Функция обрабатывает новый заказ
 process_new_order(Order) when is_record(Order, order) ->
     %% Пометить статус заказа в БД как 'поступивший'=1
-    db_api:update_order_status(Order#order.order_id, 1),
+    db_api:set_order_status(Order#order.order_id, 1),
 
     %% Проверить статус(=0) и режим обработки(=0)
     case {Order#order.processing_mode, Order#order.status} of
@@ -111,11 +111,11 @@ process_new_order_(Order) ->
 		    db_api:add_user_service (User#user.user_id, Order#order.service_id, NodeId, ParamsStr, EndDate, Status),
 		    
 		    %% Пометить заказ как 'обработанный'=2
-		    db_api:update_order_status(Order#order.order_id, 2);
+		    db_api:set_order_status(Order#order.order_id, 2);
 		_ ->
 		    %% Средств не хватает 
 		    %% Пометить статус заказа в БД как 'требующий обработки'=0
-		    db_api:update_order_status(Order#order.order_id, 0),
+		    db_api:set_order_status(Order#order.order_id, 0),
 		    low_balance
 	    end;
 	_ -> 

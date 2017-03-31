@@ -57,7 +57,7 @@ init(_Args) ->
     erlang:send_after(?CHECK_INTERVAL, self(), activate_user_services_timer),
 
     %% Запустить таймер, обрабатывающий просроченные пользовательские сервисы
-    erlang:send_after(?CHECK_INTERVAL, self(), disable_expires_timer),
+    %%erlang:send_after(?CHECK_INTERVAL, self(), disable_expires_timer),
     {ok, #state{}}.
 
 
@@ -67,10 +67,10 @@ init(_Args) ->
 %% Хэндлер таймера, обрабатывающего неактивированные пользовательские сервисы
 %%
 handle_info(activate_user_services_timer, State) ->
-    %%io:format("DEBUG>> Activate user services timer boooom ! ~n"),
+    io:format("DEBUG>> Activate user services timer boooom ! ~n"),
 
     %% Получить из БД список неактивированных сервисов
-    case db_api:get_user_services({status, 0}) of
+    case user_service:get(#{status => 0}) of
 	{ok, UserServices} when is_list(UserServices) ->
 	    %% пройтись по списку сервисов и вызвать ф-ю активации для каждого
 	    lists:foreach(fun(UserService) ->
@@ -138,10 +138,24 @@ code_change(_OldVsn, State, _Extra) ->
 
 
 activate_user_service(UserService) when is_record(UserService, user_service) ->
-    %% Пометить статус заказа в БД как 'поступивший'=1
-    db_api:update_user_service_status(UserService#user_service.user_service_id, 1),
+    %% Пометить неактивированный пользовательский сервис как `поступивший в обработку`
+    user_service:set_status(UserService#user_service.user_service_id, 1),
     spawn(fun() -> activate_user_service_(UserService) end);
 activate_user_service(_UserService) -> invalid_record.
+
+
+%% 3001 - выдать предмет в игре CS:GO, выйграный в лотерее на сайте gocs.pro
+activate_user_service_(UserService) when UserService#user_service.type == 3001 ->
+    %% найти подходящий обслуживающий узел
+    NodeRec = nodes_controller:get_suitable_node(UserService#user_service.type),
+    case NodeRec of
+	NodeRec when is_record(NodeRec, node) -> 
+	    io:format("DEBUG>> (PID: ~p) NodeRec: ~p! ~n UserService: ~p~n",[self(), NodeRec, UserService]),
+	    ok;
+	not_found ->
+	    %% Пометить сервис как обработанный, с кодом ошибки, что нет доступных ресурсов(=7)
+	    db_api:update_user_service_status(UserService#user_service.user_service_id, 7)
+    end;
 
 
 %% Web хостинг фиксированный

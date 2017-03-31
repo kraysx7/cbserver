@@ -30,13 +30,41 @@ list_to_float(List) when is_list(List)->
 
 list_to_float(_) -> badarg.
 
+%% ----------------------------------------------------------
+
+utc_to_datetime(UtcSeconds) ->
+   BaseDate      = calendar:datetime_to_gregorian_seconds({{1970,1,1},{0,0,0}}),
+   Seconds       = BaseDate + UtcSeconds,
+   {Date,Time} = calendar:gregorian_seconds_to_datetime(Seconds),
+   {Date,Time}.
+
+-define(UNIX_EPOCH_MAGIC, 62167219200).
+datetime_to_utc(DateTime) ->
+    UtcSeconds = case DateTime of
+		     undefined -> 0;
+		     {{_,_,_},{_,_,_}} = DT ->
+			 calendar:datetime_to_gregorian_seconds(DT)-?UNIX_EPOCH_MAGIC;
+		     {datetime, {{_,_,_},{_,_,_}} = DT2} ->
+			 calendar:datetime_to_gregorian_seconds(DT2)-?UNIX_EPOCH_MAGIC
+		 end,
+    UtcSeconds.
 
 %% ----------------------------------------------------------
 
-decode_service_params(ParamsBin) ->
-    {ok, T, _} = erl_scan:string(binary_to_list(ParamsBin)), 
-    {ok, TermParams} = erl_parse:parse_term(T), TermParams.
+decode_service_params(ParamsBin) when byte_size(ParamsBin) > 0 ->
+    {ok, T, _} = erl_scan:string(binary_to_list(ParamsBin)),
+    try erl_parse:parse_term(T) of
+	{ok, TermParams} -> TermParams;
+	{error, Reason} ->
+	    io:format("~nDEBUG>>> commons:decode_service_params parse Error: ~p~nParams: ~p~n", [Reason, binary_to_list(ParamsBin)]),
+	    []
+    catch
+	Error ->
+	    io:format("~nDEBUG>>> commons:decode_service_params catch Error: ~p~n", [Error]),
+	    []
+    end;
 
+decode_service_params(ParamsBin) -> [].
 
 records_to_tuplelist(Services, ServicesRecName) when is_list(Services) ->
     lists:foldl(

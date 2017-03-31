@@ -10,10 +10,11 @@ start_link() ->
 init(_Args) ->
     {ok, {{one_for_one, 100, 1},
 	  [
-	   {handler_vps,                {handler_vps,               start_link, []}, permanent, brutal_kill, worker, []},
-	   {nodes_controller,           {nodes_controller,          start_link, []}, permanent, brutal_kill, worker, []},
-	   {orders_controller,          {orders_controller,         start_link, []}, permanent, brutal_kill, worker, []},
-	   {services_controller,        {services_controller,       start_link, []}, permanent, brutal_kill, worker, []}
+	   {user_service_cache_cntl,      {user_service_cache_cntl,   start_link, []}, permanent, brutal_kill, worker, []},
+	   {rates_srv,                    {rates_srv,                 start_link, []}, permanent, brutal_kill, worker, []}
+	   %%{nodes_controller,           {nodes_controller,          start_link, []}, permanent, brutal_kill, worker, []},
+	   %%{orders_controller,          {orders_controller,         start_link, []}, permanent, brutal_kill, worker, []},
+	   %%{services_controller,        {services_controller,       start_link, []}, permanent, brutal_kill, worker, []}
 	  ]
 	 }
     }. 

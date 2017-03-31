@@ -9,7 +9,7 @@
 %% gen_server callbacks
 -export([init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3]).
 
--define(CHECK_INTERVAL, 1000). % one second
+-define(CHECK_INTERVAL, 10000). % one second * 100
 -define(SERVER, ?MODULE).
 
 -record(state, {}).
