@@ -18,7 +18,7 @@
 %%  }
 %%
 create(ParamsMap) -> log_db:create(ParamsMap).
-
+%% Коммент фром  александр
 
 
 %% ---- get ----
