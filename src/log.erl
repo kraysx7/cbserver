@@ -22,6 +22,7 @@ create(ParamsMap) -> log_db:create(ParamsMap).
 
 any_super_fun() -> ok.
 
+any_super_fun2() -> ok.
 
 %% ---- get ----
 %%
@@ -29,7 +30,7 @@ any_super_fun() -> ok.
 %% #{log_id => LogId,
 %%   action_type => ActionType,
 %%   action_name => ActionName,
-%%   user_id => UserId,
+%%   user_id => UserId, 
 %%   user_name => UserName,
 %%   creation_time => DateTime,
 %%   params => Params,
