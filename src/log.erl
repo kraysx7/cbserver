@@ -20,6 +20,8 @@
 create(ParamsMap) -> log_db:create(ParamsMap).
 %% Ilya comment 2
 
+any_super_fun() -> ok.
+
 
 %% ---- get ----
 %%
