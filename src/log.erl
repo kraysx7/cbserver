@@ -18,12 +18,16 @@
 %%  }
 %%
 create(ParamsMap) -> log_db:create(ParamsMap).
+%% Ilya comment 2
 <<<<<<< HEAD
 %% Коммент фром  александр
 =======
 %% Ilya comment
 >>>>>>> bf9854d9e4c702595a4d79e90a6fd82b0fd8740e
 
+any_super_fun() -> ok.
+
+any_super_fun2() -> ok.
 
 %% ---- get ----
 %%
@@ -31,7 +35,7 @@ create(ParamsMap) -> log_db:create(ParamsMap).
 %% #{log_id => LogId,
 %%   action_type => ActionType,
 %%   action_name => ActionName,
-%%   user_id => UserId,
+%%   user_id => UserId, 
 %%   user_name => UserName,
 %%   creation_time => DateTime,
 %%   params => Params,
