@@ -4,6 +4,7 @@
 
 -include("../include/log.hrl").
 
+
 %% ---- add ----
 %%
 %% ParamsMap (Параметры для создания записи в формате Maps):
@@ -18,14 +19,7 @@
 %%  }
 %%
 create(ParamsMap) -> log_db:create(ParamsMap).
-%% Ilya comment 2
-%% Коммент фром  александр
-%% Ilya comment
-%% Ilya comment3
 
-any_super_fun() -> ok.
-
-any_super_fun2() -> ok.
 
 %% ---- get ----
 %%
