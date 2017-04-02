@@ -21,6 +21,7 @@ create(ParamsMap) -> log_db:create(ParamsMap).
 %% Ilya comment 2
 %% Коммент фром  александр
 %% Ilya comment
+%% Ilya comment 3
 
 any_super_fun() -> ok.
 
