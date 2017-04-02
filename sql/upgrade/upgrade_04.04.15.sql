@@ -1,1 +1,0 @@
-ALTER TABLE `user_service` MODIFY COLUMN params VARCHAR(2048);

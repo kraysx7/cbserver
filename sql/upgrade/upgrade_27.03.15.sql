@@ -1,3 +1,0 @@
-ALTER TABLE `user` ADD `partner_id` BIGINT DEFAULT 0 AFTER `status`;
-
-ALTER TABLE `user` ADD `role` TINYINT NOT NULL DEFAULT 0 AFTER `name`;
