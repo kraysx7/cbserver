@@ -19,11 +19,8 @@
 %%
 create(ParamsMap) -> log_db:create(ParamsMap).
 %% Ilya comment 2
-<<<<<<< HEAD
 %% Коммент фром  александр
-=======
 %% Ilya comment
->>>>>>> bf9854d9e4c702595a4d79e90a6fd82b0fd8740e
 
 any_super_fun() -> ok.
 
